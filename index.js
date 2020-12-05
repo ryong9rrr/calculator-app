@@ -1,5 +1,6 @@
 const form = document.querySelector(".js-form");
 const resultScreen = document.querySelector(".main-result");
+let textScreen = [];
 /*
 const btnDivision = document.getElementById("division");
 const btnMultiply = document.getElementById("multiply");
@@ -36,12 +37,19 @@ function deleteNum(){
     console.log("deleteNum");
 }
 
-function getValue(event){
+function loadScreen(currentValue) {
+    const leg = textScreen.length + 1;
+    textScreen.push(currentValue);
+    resultScreen.innerText = `${currentValue}`;
+    console.log(leg);
+}
+
+function loadValue(event){
     const btn = event.target;
     const currentValue = btn.value;
 
     if (btn.id < 10 | btn.id == "dot" | btn.id == "left" | btn.id == "right") {
-        resultScreen.innerText = currentValue;
+        loadScreen(currentValue);
     } else if(btn.id == "delete") {
         deleteNum();
     } else if(btn.id == "equal") {
@@ -54,7 +62,7 @@ function getValue(event){
 }
 
 function init(){
-    form.addEventListener("click", getValue);
+    form.addEventListener("click", loadValue);
 }
 
 init();
