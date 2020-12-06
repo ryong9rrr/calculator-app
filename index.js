@@ -1,6 +1,6 @@
 const form = document.querySelector(".js-form");
 const resultScreen = document.querySelector(".main-result");
-let textScreen = [];
+let valueArray = [];
 /*
 const btnDivision = document.getElementById("division");
 const btnMultiply = document.getElementById("multiply");
@@ -37,20 +37,25 @@ function deleteNum(){
     console.log("deleteNum");
 }
 
-function loadScreen(currentValue) {
-    const leg = textScreen.length + 1;
-    textScreen.push(currentValue);
-    resultScreen.innerText = `${currentValue}`;
-    console.log(leg);
+function saveNumber(currentValue) {
+    const leg = valueArray.length;
+    const currentResult = Math.pow(10, leg) * currentValue;
+    valueArray.push(currentResult); 
+    console.log(valueArray);
+    //valueArray.reverse.push(currentValue);
+    //resultScreen.innerText = `${valueArray}`;
+    
 }
 
 function loadValue(event){
     const btn = event.target;
     const currentValue = btn.value;
 
-    if (btn.id < 10 | btn.id == "dot" | btn.id == "left" | btn.id == "right") {
-        loadScreen(currentValue);
-    } else if(btn.id == "delete") {
+    if (btn.id < 10) {
+        saveNumber(currentValue);
+    } /*else if(btn.id == "dot" | btn.id == "left" | btn.id == "right"){
+
+    }*/ else if(btn.id == "delete") {
         deleteNum();
     } else if(btn.id == "equal") {
         calculate();
