@@ -29,12 +29,18 @@ function returnZero(){
     console.log("returnZero");
 }
 
-function calculate(){
-    console.log("calculate");
-}
-
-function deleteNum(){
-    console.log("deleteNum");
+class Stack {
+    constructor() {
+      this.store = [];
+    }
+    
+    push(item) {
+      this.store.push(item);
+    }
+    
+    pop() {
+      return this.store.pop();
+    }
 }
 
 function saveNumber(currentValue) {
@@ -47,9 +53,16 @@ function saveNumber(currentValue) {
     
 }
 
-function loadValue(event){
+function loadNumber(event) {
     const btn = event.target;
     const currentValue = btn.value;
+    //const stackSaveLength = stackSave.store.length;
+    const testLength = test.length;
+
+    test.push(currentValue);
+    stackSave.push(currentValue);
+    
+    var sum = 0;
 
     if (btn.id < 10) {
         saveNumber(currentValue);
@@ -64,10 +77,15 @@ function loadValue(event){
     } else {
         mathNotation();
     }
+
+    //const result = Math.pow(10, stackSaveLength) * stack.pop();
+
+    resultScreen.innerText = `${sum}`;
+    
 }
 
-function init(){
-    form.addEventListener("click", loadValue);
+function init() {
+    form.addEventListener('click', loadNumber);
 }
 
 init();
