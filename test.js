@@ -18,6 +18,7 @@ class Stack{
 let tempStack = new Stack();
 let saveStack = new Stack();
 
+
 function paintNumber() {
     var sum = 0;
     for(var i=0; i<numArray.length; i++){
