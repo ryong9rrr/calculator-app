@@ -3,11 +3,64 @@ const resultScreen = document.querySelector(".main-result");
 
 let valueArray = [];
 
-function resultBtn(){
-    const result = resultScreen.textContent;
+let stack = [];
+let convert = [];
+let temp = ""; // 두자리수 이상의 숫자를 저장할 임시변수
 
-    console.log(result);
+// 우선순위를 반환하는 함수
+function prec(op) {
+    switch(op) {
+        case '(':
+        case ')':
+            return 0;
+        case '+':
+        case '-':
+            return 1;
+        case '×':
+        case '/':
+            return 2;    
+        }
+        return 999;
 }
+
+
+
+function resultBtn(){
+    const f = resultScreen.textContent;
+
+    for(let i = 0; i<f.length; i++) {
+        const char = f.charAt(i);
+        
+        switch(char) {
+            case '(' :
+                stack.push(char);
+                break;
+
+            case '+' : case '-' : case '×' : case '/' :
+                //스택에 넣어야함
+
+
+
+
+
+            case ')' :
+
+
+            default :
+                temp += char;
+                if(isNaN(f.charAt(i+1)) || ((i+1)==f.length)){
+                    convert.push(temp);
+                    temp="";
+                }
+                break;
+        }
+    }
+
+}
+
+
+
+
 
 function initBtn(){
     valueArray = [];

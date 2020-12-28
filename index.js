@@ -89,3 +89,17 @@ function init() {
 }
 
 init();
+
+
+
+
+
+
+if(isNaN(char)) {
+    numArray.push(num);
+    num = "";
+
+    console.log(`${char} is string`);   //연산자 출력
+} else {
+    num += char;    //숫자를 뽑아냄
+}
