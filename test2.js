@@ -37,24 +37,48 @@ function resultBtn(){
                 break;
 
             case '+' : case '-' : case '×' : case '/' :
-                //스택에 넣어야함
-
-
-
-
+                while(stack[stack.length - 1] != null &&
+                    prec(char) <= prec(stack[stack.length - 1]) ){
+                        convert.push(stack.pop());
+                } 
+                stack.push(char);
+                break;
 
             case ')' :
+                let returned_op = stack.pop();
+                while(returned_op != '('){
+                    temp += returned_op;
+                    returned_op = stack.pop();
 
-
+                    if(isNaN(stack[stack.length - 1])){
+                        convert.push(temp);
+                        temp = "";
+                    }
+                } 
+                break;
+                            
             default :
-                temp += char;
-                if(isNaN(f.charAt(i+1)) || ((i+1)==f.length)){
+                temp += char; // isNaN(f.charAt(i+1)) : 다음에 연산자가 나오면
+                if(isNaN(f.charAt(i+1)) || ( (i+1) == f.length )){
                     convert.push(temp);
                     temp="";
                 }
                 break;
         }
+        
     }
+    
+    while(stack[stack.length - 1] != null){
+        convert.push(stack.pop());
+    }
+
+    let result = "";
+    for(let i in convert){
+        result += convert[i];
+        result += " ";
+    }
+
+    console.log(result); //후위표기식
 
 }
 
@@ -64,6 +88,9 @@ function resultBtn(){
 
 function initBtn(){
     valueArray = [];
+    convert = [];
+    stack = [];
+    temp = "";
     paintValue();
 }
 
