@@ -60,8 +60,12 @@ function resultBtn(){
             default :
                 temp += char; // isNaN(f.charAt(i+1)) : 다음에 연산자가 나오면
                 if(isNaN(f.charAt(i+1)) || ( (i+1) == f.length )){
+                    if(f.charAt(i+1) == '.'){   //소수점처리
+                        continue;
+                    } else {
                     convert.push(temp);
                     temp="";
+                    }
                 }
                 break;
         }
