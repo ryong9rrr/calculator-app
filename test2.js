@@ -23,8 +23,6 @@ function prec(op) {
         return 999;
 }
 
-
-
 function resultBtn(){
     const f = resultScreen.textContent;
 
@@ -75,20 +73,51 @@ function resultBtn(){
     while(stack[stack.length - 1] != null){
         convert.push(stack.pop());
     }
+    //후위표기식 숫자와 연산자는 convert에 모두 담기게 됨.
 
+
+    // 후위표기식 출력코드
     let result = "";
     for(let i in convert){
         result += convert[i];
         result += " ";
     }
+    console.log(result);
+    
 
-    console.log(result); //후위표기식
+    // 후위표기식 계산 시작
+
+    for(let i in convert){
+        if(!isNaN(convert[i])){
+            stack.push(convert[i]);
+        } else{
+            const b = parseFloat(stack.pop());
+            const a = parseFloat(stack.pop());
+
+            switch(convert[i]){
+                case '+' : stack.push(a+b);
+                    break;
+                
+                case '-' : stack.push(a-b);
+                    break;
+
+                case '×' : stack.push(a*b);
+                    break;
+
+                case '/' : stack.push(a/b);
+                    break;
+            }
+        }
+    }
+
+    console.log(+stack); //최종적으로 stack에 남아있는 값이 계산결과
+
+    resultScreen.innerText = +stack;
+
 
 }
 
-
-
-
+////////////////////////////////////////////////////////////
 
 function initBtn(){
     valueArray = [];
