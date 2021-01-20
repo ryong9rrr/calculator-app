@@ -1,105 +1,169 @@
 const form = document.querySelector(".js-form");
 const resultScreen = document.querySelector(".main-result");
+
 let valueArray = [];
-/*
-const btnDivision = document.getElementById("division");
-const btnMultiply = document.getElementById("multiply");
-const btnSubtract = document.getElementById("subtract");
-const btnPlus = document.getElementById("plus");
-const btnNum7 = document.getElementById("num_7");
-const btnNum8 = document.getElementById("num_8");
-const btnNum9 = document.getElementById("num_9");
-const btnNum4 = document.getElementById("num_4");
-const btnNum5 = document.getElementById("num_5");
-const btnNum6 = document.getElementById("num_6");
-const btnNum1 = document.getElementById("num_1");
-const btnNum2 = document.getElementById("num_2");
-const btnNum3 = document.getElementById("num_3");
-const btnDelete = document.getElementById("delete");
-const btnNum0 = document.getElementById("num_0");
-const btnDot = document.getElementById("dot");
-const btnEqual = document.getElementById("equal");
-const btnAC = document.getElementById("AC");
-*/
-function mathNotation(){
-    console.log("math");
+
+let stack = [];
+let convert = [];
+let temp = ""; // 두자리수 이상의 숫자를 저장할 임시변수
+
+// 우선순위를 반환하는 함수
+function prec(op) {
+    switch(op) {
+        case '(':
+        case ')':
+            return 0;
+        case '+':
+        case '-':
+            return 1;
+        case '×':
+        case '/':
+            return 2;    
+        }
+        return 999;
 }
 
-function returnZero(){
-    console.log("returnZero");
-}
+function resultBtn(){
+    const f = resultScreen.textContent;
 
-class Stack {
-    constructor() {
-      this.store = [];
+    for(let i = 0; i<f.length; i++) {
+        const char = f.charAt(i);
+        
+        switch(char) {
+            case '(' :
+                stack.push(char);
+                break;
+
+            case '+' : case '-' : case '×' : case '/' :
+                while(stack[stack.length - 1] != null &&
+                    prec(char) <= prec(stack[stack.length - 1]) ){
+                        convert.push(stack.pop());
+                } 
+                stack.push(char);
+                break;
+
+            case ')' :
+                let returned_op = stack.pop();
+                while(returned_op != '('){
+                    temp += returned_op;
+                    returned_op = stack.pop();
+
+                    if(isNaN(stack[stack.length - 1])){
+                        convert.push(temp);
+                        temp = "";
+                    }
+                } 
+                break;
+                            
+            default :
+                temp += char; // isNaN(f.charAt(i+1)) : 다음에 연산자가 나오면
+                if(isNaN(f.charAt(i+1)) || ( (i+1) == f.length )){
+                    if(f.charAt(i+1) == '.'){   //소수점처리
+                        continue;
+                    } else {
+                    convert.push(temp);
+                    temp="";
+                    }
+                }
+                break;
+        }
+        
     }
     
-    push(item) {
-      this.store.push(item);
+    while(stack[stack.length - 1] != null){
+        convert.push(stack.pop());
     }
+    //후위표기식 숫자와 연산자는 convert에 모두 담기게 됨.
+
+
+    // 후위표기식 출력코드
+    let result = "";
+    for(let i in convert){
+        result += convert[i];
+        result += " ";
+    }
+    console.log(result);
     
-    pop() {
-      return this.store.pop();
+
+    // 후위표기식 계산 시작
+
+    for(let i in convert){
+        if(!isNaN(convert[i])){
+            stack.push(convert[i]);
+        } else{
+            const b = parseFloat(stack.pop());
+            const a = parseFloat(stack.pop());
+
+            switch(convert[i]){
+                case '+' : stack.push(a+b);
+                    break;
+                
+                case '-' : stack.push(a-b);
+                    break;
+
+                case '×' : stack.push(a*b);
+                    break;
+
+                case '/' : stack.push(a/b);
+                    break;
+            }
+        }
     }
+
+    console.log(+stack); //최종적으로 stack에 남아있는 값이 계산결과
+
+    resultScreen.innerText = +stack;
+
+
 }
 
-function saveNumber(currentValue) {
-    const leg = valueArray.length;
-    const currentResult = Math.pow(10, leg) * currentValue;
-    valueArray.push(currentResult); 
-    console.log(valueArray);
-    //valueArray.reverse.push(currentValue);
-    //resultScreen.innerText = `${valueArray}`;
-    
+////////////////////////////////////////////////////////////
+
+function initBtn(){
+    valueArray = [];
+    convert = [];
+    stack = [];
+    temp = "";
+    paintValue();
 }
 
-function loadNumber(event) {
+function delBtn(){
+    valueArray.length = valueArray.length - 1;
+    paintValue();
+}
+
+function paintValue() {
+    var value = "";
+    for(var i=0; i<valueArray.length; i++){
+        value = value + valueArray[i];
+    }
+    resultScreen.innerText = value;
+}
+
+function saveBtn(value) {
+    valueArray.push(value);
+    paintValue();
+}
+
+function clickedBtn(event) {
     const btn = event.target;
-    const currentValue = btn.value;
-    //const stackSaveLength = stackSave.store.length;
-    const testLength = test.length;
+    let btnValue = btn.value;
 
-    test.push(currentValue);
-    stackSave.push(currentValue);
-    
-    var sum = 0;
-
-    if (btn.id < 10) {
-        saveNumber(currentValue);
-    } /*else if(btn.id == "dot" | btn.id == "left" | btn.id == "right"){
-
-    }*/ else if(btn.id == "delete") {
-        deleteNum();
-    } else if(btn.id == "equal") {
-        calculate();
-    } else if (btn.id =="AC") {
-        returnZero();
-    } else {
-        mathNotation();
+    if(btn.id < 30) {
+        saveBtn(btnValue);
+    } else if(btn.id =="31") {
+        delBtn(btnValue);
+    } else if(btn.id =="32") {
+        initBtn(btnValue);
+    } else if(btn.id =="33") {
+        resultBtn(btnValue);
     }
-
-    //const result = Math.pow(10, stackSaveLength) * stack.pop();
-
-    resultScreen.innerText = `${sum}`;
     
 }
 
 function init() {
-    form.addEventListener('click', loadNumber);
+    form.addEventListener('click', clickedBtn);
 }
 
 init();
 
-
-
-
-
-
-if(isNaN(char)) {
-    numArray.push(num);
-    num = "";
-
-    console.log(`${char} is string`);   //연산자 출력
-} else {
-    num += char;    //숫자를 뽑아냄
-}
