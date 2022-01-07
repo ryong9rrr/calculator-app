@@ -1,41 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Calculator</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="css/style.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/index.css" />
+    <title>🍌Vanilla Calculator (complicated)</title>
   </head>
-
   <body>
-    <div class="main">
-      <div class="main-result-screen">
-        <h3 class="main-result"></h3>
-      </div>
-      <div class="main-body">
-        <form class="body-grid js-form">
-          <input id="11" type="button" value="(" />
-          <input id="12" type="button" value=")" />
-          <input id="31" type="button" value="del" />
-          <input id="32" type="button" value="AC" />
-          <input id="7" type="button" value="7" />
-          <input id="8" type="button" value="8" />
-          <input id="9" type="button" value="9" />
-          <input id="21" type="button" value="+" />
-          <input id="4" type="button" value="4" />
-          <input id="5" type="button" value="5" />
-          <input id="6" type="button" value="6" />
-          <input id="22" type="button" value="-" />
-          <input id="1" type="button" value="1" />
-          <input id="2" type="button" value="2" />
-          <input id="3" type="button" value="3" />
-          <input id="23" type="button" value="×" />
-          <input id="0" type="button" value="0" />
-          <input id="10" type="button" value="." />
-          <input id="33" type="button" value="=" />
-          <input id="24" type="button" value="/" />
-        </form>
+    <div id="app">
+      <div class="calculator">
+        <h1 id="total">0</h1>
+        <div class="modifiers">
+          <button class="delete">del</button>
+          <button class="modifier">AC</button>
+        </div>
+        <div class="digits">
+          <button class="digit">9</button>
+          <button class="digit">8</button>
+          <button class="digit">7</button>
+          <button class="digit">6</button>
+          <button class="digit">5</button>
+          <button class="digit">4</button>
+          <button class="digit">3</button>
+          <button class="digit">2</button>
+          <button class="digit">1</button>
+          <button class="digit">0</button>
+        </div>
+        <div class="operations">
+          <button class="operation">/</button>
+          <button class="operation">X</button>
+          <button class="operation">+</button>
+          <button class="operation">-</button>
+          <button class="bracket">(</button>
+          <button class="bracket">)</button>
+          <button class="dot">.</button>
+          <button class="equal">=</button>
+        </div>
       </div>
     </div>
   </body>
-  <script src="index.js"></script>
+  <script type="module" src="src/index.js"></script>
 </html>
