@@ -104,4 +104,17 @@ describe("복잡한 계산기 앱 테스트", () => {
     cy.get(".dot").click();
     cy.get("#total").should("have.text", ")");
   });
+
+  it("맨 처음에 0을 계속 입력하면 0이다.", () => {
+    for (let i = 0; i < 4; i++) {
+      cy.get(".digit").contains("0").click();
+      cy.get("#total").should("have.text", "0");
+    }
+  });
+
+  it("0을 한번 입력하고 숫자를 입력하면 그 숫자가 렌더링된다.", () => {
+    cy.get(".digit").contains("0").click();
+    cy.get(".digit").contains("1").click();
+    cy.get("#total").should("have.text", "1");
+  });
 });

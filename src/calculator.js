@@ -1,5 +1,6 @@
 import { checkBracket } from "./utils/checkBracket.js";
 import { checkDecimal } from "./utils/checkDecimal.js";
+import { operate } from "./utils/operate.js";
 
 class Calculator {
   constructor(targetId) {
@@ -34,8 +35,10 @@ class Calculator {
     if (!checkBracket(strings)) return alert("괄호가 올바르지 않습니다.");
     if (!checkDecimal(strings)) return alert("소수점이 올바르지 않습니다.");
 
-    console.log(strings);
-    return;
+    const result = operate(strings, this.stack);
+    this.stack = [];
+    this.stack.push(result);
+    return this.#render();
   }
 
   #clickedEqual = () => {
@@ -69,12 +72,15 @@ class Calculator {
     if (target.textContent === "=") return this.#clickedEqual();
     if (!this.#ValidOperators(target.textContent))
       return alert("올바르지 않은 수식입니다.");
-
     this.stack.push(target.textContent);
     return this.#render();
   };
 
   putNumbers = ({ target }) => {
+    if (this.stackLength === 1 && this.stack[0] === "0") {
+      if (target.textContent === "0") return;
+      this.stack.pop();
+    }
     this.stack.push(target.textContent);
     return this.#render();
   };
