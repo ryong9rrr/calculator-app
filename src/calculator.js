@@ -1,6 +1,6 @@
-import { checkBracket } from "./algorithm/checkBracket.js";
-import { checkDecimal } from "./algorithm/checkDecimal.js";
-import { Postfix } from "./algorithm/postfix.js";
+import { checkBracket } from "./operator/checkBracket.js";
+import { checkDecimal } from "./operator/checkDecimal.js";
+import { Operator } from "./operator/Operator.js";
 
 class Calculator {
   constructor(targetId) {
@@ -36,7 +36,7 @@ class Calculator {
     if (!checkDecimal(strings)) return alert("소수점이 올바르지 않아요.");
 
     try {
-      const f = new Postfix(strings);
+      const f = new Operator(strings);
       this.stack = [f.operate()];
       return this.#render();
     } catch (e) {

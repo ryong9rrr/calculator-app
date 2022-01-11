@@ -1,10 +1,9 @@
 // 후위연산 알고리즘
-
-export class Postfix {
+export class Operator {
   constructor(func) {
     this.func = func;
     this.stack = [];
-    this.convert = [];
+    this.postfixStack = [];
     this.temp = "";
   }
 
@@ -51,7 +50,7 @@ export class Postfix {
             this.stackLength > 0 &&
             this.#prec(x) <= this.#prec(this.stackLast)
           ) {
-            this.convert.push(this.stack.pop());
+            this.postfixStack.push(this.stack.pop());
           }
           this.stack.push(x);
           break;
@@ -66,7 +65,7 @@ export class Postfix {
             returnedOp = this.stack.pop();
 
             if (isNaN(this.stackLast)) {
-              this.convert.push(this.temp);
+              this.postfixStack.push(this.temp);
               this.temp = "";
             }
           }
@@ -79,23 +78,23 @@ export class Postfix {
               //소수점 처리
               continue;
             }
-            this.convert.push(this.temp);
+            this.postfixStack.push(this.temp);
             this.temp = "";
           }
           break;
       }
     }
     while (this.stackLength > 0) {
-      this.convert.push(this.stack.pop());
+      this.postfixStack.push(this.stack.pop());
     }
 
     return true;
   };
 
-  operate = () => {
+  #operatePostfix = () => {
     if (!this.#postfix())
       throw new Error("postfix error: 올바르지 않은 수식이에요.");
-    for (const x of this.convert) {
+    for (const x of this.postfixStack) {
       if (!isNaN(x)) {
         this.stack.push(x);
       } else {
@@ -123,5 +122,9 @@ export class Postfix {
     }
 
     return Number(this.stack[0]);
+  };
+
+  operate = () => {
+    return this.#operatePostfix();
   };
 }
