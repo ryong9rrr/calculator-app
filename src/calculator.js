@@ -1,6 +1,6 @@
-import { checkBracket } from "./utils/checkBracket.js";
-import { checkDecimal } from "./utils/checkDecimal.js";
-import { operate } from "./utils/operate.js";
+import { checkBracket } from "./algorithm/checkBracket.js";
+import { checkDecimal } from "./algorithm/checkDecimal.js";
+import { Postfix } from "./algorithm/postfix.js";
 
 class Calculator {
   constructor(targetId) {
@@ -32,19 +32,23 @@ class Calculator {
   };
 
   #operate(strings) {
-    if (!checkBracket(strings)) return alert("괄호가 올바르지 않습니다.");
-    if (!checkDecimal(strings)) return alert("소수점이 올바르지 않습니다.");
+    if (!checkBracket(strings)) return alert("괄호가 올바르지 않아요.");
+    if (!checkDecimal(strings)) return alert("소수점이 올바르지 않아요.");
 
-    const result = operate(strings, this.stack);
-    this.stack = [];
-    this.stack.push(result);
-    return this.#render();
+    try {
+      const f = new Postfix(strings);
+      this.stack = [f.operate()];
+      return this.#render();
+    } catch (e) {
+      console.error(e);
+      return alert("올바르지 않은 수식이에요.");
+    }
   }
 
   #clickedEqual = () => {
     if (this.stackLength === 0) return this.#render();
     if (this.stackLast !== ")" && isNaN(this.stackLast)) {
-      return alert("올바르지 않은 수식입니다.");
+      return alert("올바르지 않은 수식이에요.");
     }
     return this.#operate(this.stack.join(""));
   };
@@ -71,7 +75,7 @@ class Calculator {
   putOperators = ({ target }) => {
     if (target.textContent === "=") return this.#clickedEqual();
     if (!this.#ValidOperators(target.textContent))
-      return alert("올바르지 않은 수식입니다.");
+      return alert("올바르지 않은 수식이에요.");
     this.stack.push(target.textContent);
     return this.#render();
   };
