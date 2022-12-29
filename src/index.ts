@@ -1,3 +1,9 @@
 import './style/index.css'
+import App from './app'
+import Calculator from './Calculator'
 
-window.alert('hello ts + webpack!')
+const calculator = new Calculator()
+
+const app = new App(calculator)
+
+app.run()
