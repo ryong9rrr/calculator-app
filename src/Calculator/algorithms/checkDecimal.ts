@@ -1,16 +1,15 @@
 export default function checkDecimal(exp: string) {
   if (exp.length === 0) {
-    return true
+    return
   }
 
   if (exp[0] === '.') {
-    return false
+    throw new Error('invalid expression.')
   }
 
   const check1 = /[.]\d+[.]/g
   const check2 = /\D[.]+\d+/g
   if (check1.test(exp) || check2.test(exp)) {
-    return false
+    throw new Error('invalid expression.')
   }
-  return true
 }

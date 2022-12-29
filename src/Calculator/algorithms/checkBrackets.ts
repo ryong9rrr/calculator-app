@@ -1,6 +1,6 @@
 export default function checkBracket(exp: string) {
   if (exp.length === 0) {
-    return true
+    return
   }
 
   const stack = []
@@ -9,7 +9,7 @@ export default function checkBracket(exp: string) {
       stack.push(char)
     } else if (char === ')') {
       if (stack.length === 0) {
-        return false
+        throw new Error('invalid expression.')
       }
       if (stack.length > 0 && stack[stack.length - 1] == '(') {
         stack.pop()
@@ -18,5 +18,7 @@ export default function checkBracket(exp: string) {
       stack.push(char)
     }
   }
-  return stack.length > 0 ? false : true
+  if (stack.length > 0) {
+    throw new Error('invalid expression.')
+  }
 }
