@@ -1,12 +1,20 @@
 import { CalculatorService } from '@/interfaces'
+import {
+  calculateForPostfix,
+  postfix,
+  sliceExpression,
+  validateForBracket,
+  validateForDecimal,
+} from './algorithms'
 
 export default class Calculator implements CalculatorService {
-  //eslint-disable-next-line
-  calculate(expression: string): number {
-    return 0
+  calculate(exp: string): number {
+    this.validate(exp)
+    return calculateForPostfix(postfix(sliceExpression(exp)))
   }
 
-  add(a: number, b: number) {
-    return a + b
+  private validate(exp: string) {
+    validateForBracket(exp)
+    validateForDecimal(exp)
   }
 }

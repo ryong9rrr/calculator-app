@@ -1,3 +1,5 @@
+const ERROR_MESSAGE = 'invalid expression.'
+
 const format = (number: string) => {
   if (parseFloat(number) === parseInt(number, 10)) {
     return parseInt(number, 10)
@@ -35,7 +37,7 @@ export default function calculateForPostfix(exp: string[]) {
   const result = stack[0]
 
   if (stack.length > 1 || Number.isNaN(Number(result))) {
-    throw new Error('operate Error: 올바르지 않은 수식이에요.')
+    throw new Error(ERROR_MESSAGE)
   }
 
   return format(result.toString())

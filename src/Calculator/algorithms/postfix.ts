@@ -1,3 +1,5 @@
+const ERROR_MESSAGE = 'invalid expression.'
+
 const getPriority = (value: string) => {
   switch (value) {
     case '(':
@@ -40,7 +42,7 @@ export default function postfix(exp: string[]) {
 
       case ')':
         // 스택이 비어있으면 올바르지 않은 수식? -> 상위에서 try ~ catch 할 것
-        if (stack.length === 0) throw new Error('invalid expression.')
+        if (stack.length === 0) throw new Error(ERROR_MESSAGE)
         let returnedOp = stack.pop() as string
         while (stack.length > 0 && returnedOp !== '(') {
           temp = temp + returnedOp
