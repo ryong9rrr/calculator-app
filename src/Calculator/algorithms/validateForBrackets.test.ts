@@ -1,6 +1,6 @@
-import checkBracket from './checkBrackets'
+import validateForBracket from './validateForBracket'
 
-describe('algorithms test : checkBrackets()', () => {
+describe('algorithms test : validateForBracket()', () => {
   test('ok', () => {
     const TEST_CASE = [
       '5 + 2',
@@ -13,7 +13,7 @@ describe('algorithms test : checkBrackets()', () => {
 
     TEST_CASE.forEach((exp) => {
       expect(() => {
-        checkBracket(exp)
+        validateForBracket(exp)
       }).not.toThrow()
     })
   })
@@ -35,8 +35,8 @@ describe('algorithms test : checkBrackets()', () => {
 
     TEST_CASE.forEach((exp) => {
       expect(() => {
-        checkBracket(exp)
-      }).toThrow()
+        validateForBracket(exp)
+      }).toThrow('bracket')
     })
   })
 })

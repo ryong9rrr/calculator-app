@@ -1,3 +1,5 @@
-export { default as checkBrackets } from './checkBrackets'
-export { default as checkDecimal } from './checkDecimal'
+export { default as validateForBracket } from './validateForBracket'
+export { default as validateForDecimal } from './validateForDecimal'
 export { default as postfix } from './postfix'
+export { default as sliceExpression } from './sliceExpression'
+export { default as calculateForPostfix } from './calculateForPostfix'

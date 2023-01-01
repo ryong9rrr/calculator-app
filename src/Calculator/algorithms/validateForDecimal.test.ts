@@ -1,6 +1,6 @@
-import checkDecimal from './checkDecimal'
+import validateForDecimal from './validateForDecimal'
 
-describe('algorithms test : checkDecimal()', () => {
+describe('algorithms test : validateForDecimal()', () => {
   test('ok', () => {
     const TEST_CASE = [
       '5+0.001',
@@ -17,7 +17,7 @@ describe('algorithms test : checkDecimal()', () => {
 
     TEST_CASE.forEach((exp) => {
       expect(() => {
-        checkDecimal(exp)
+        validateForDecimal(exp)
       }).not.toThrow()
     })
   })
@@ -44,8 +44,8 @@ describe('algorithms test : checkDecimal()', () => {
 
     TEST_CASE.forEach((exp) => {
       expect(() => {
-        checkDecimal(exp)
-      }).toThrow()
+        validateForDecimal(exp)
+      }).toThrow('decimal')
     })
   })
 })

@@ -1,4 +1,6 @@
-export default function checkBracket(exp: string) {
+const ERROR_MESSAGE = 'invalid expression : invalid bracket.'
+
+export default function validateForBracket(exp: string) {
   if (exp.length === 0) {
     return
   }
@@ -9,7 +11,7 @@ export default function checkBracket(exp: string) {
       stack.push(char)
     } else if (char === ')') {
       if (stack.length === 0) {
-        throw new Error('invalid expression.')
+        throw new Error(ERROR_MESSAGE)
       }
       if (stack.length > 0 && stack[stack.length - 1] == '(') {
         stack.pop()
@@ -19,6 +21,6 @@ export default function checkBracket(exp: string) {
     }
   }
   if (stack.length > 0) {
-    throw new Error('invalid expression.')
+    throw new Error(ERROR_MESSAGE)
   }
 }
